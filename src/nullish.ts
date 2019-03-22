@@ -12,19 +12,19 @@ export function undefinedToNull<T>(x: T | undefined): T | null {
   return x === undefined ? null : x;
 }
 
-export function mapNull<T, P>(f: (x: T) => P, x: T | null): P | null {
+export function nullMap<T, P>(f: (x: T) => P, x: T | null): P | null {
   return x !== null ? f(x) : null;
 }
 
-export function mapUndefined<T, P>(f: (x: T) => P, x: T | undefined): P | undefined {
+export function undefinedMap<T, P>(f: (x: T) => P, x: T | undefined): P | undefined {
   return x !== undefined ? f(x) : undefined;
 }
 
-export function mapNullish<T, P>(f: (x: T) => P, x: T | Nullish): P | Nullish {
+export function nullishMap<T, P>(f: (x: T) => P, x: T | Nullish): P | Nullish {
   return !isNullish(x) ? f(x) : x;
 }
 
-export function unwrapNull<T>(x: T | null): T {
+export function nullUnwrap<T>(x: T | null): T {
   if (x !== null) {
     return x;
   } else {
@@ -32,7 +32,7 @@ export function unwrapNull<T>(x: T | null): T {
   }
 }
 
-export function unwrapUndefined<T>(x: T | undefined): T {
+export function undefinedUnwrap<T>(x: T | undefined): T {
   if (x !== undefined) {
     return x;
   } else {
@@ -40,10 +40,34 @@ export function unwrapUndefined<T>(x: T | undefined): T {
   }
 }
 
-export function unwrapNullish<T>(x: T | Nullish): T {
+export function nullishUnwrap<T>(x: T | Nullish): T {
   if (!isNullish(x)) {
     return x;
   } else {
     throw new Error();
   }
+}
+
+export function nullUnwrapOr<T>(def: T, x: T | null): T {
+  return x !== null ? x : def;
+}
+
+export function undefinedUnwrapOr<T>(def: T, x: T | undefined): T {
+  return x !== undefined ? x : def;
+}
+
+export function nullishUnwrapOr<T>(def: T, x: T | Nullish): T {
+  return !isNullish(x) ? x : def;
+}
+
+export function nullUnwrapOrElse<T>(f: () => T, x: T | null): T {
+  return x !== null ? x : f();
+}
+
+export function undefinedUnwrapOrElse<T>(f: () => T, x: T | undefined): T {
+  return x !== undefined ? x : f();
+}
+
+export function nullishUnwrapOrElse<T>(f: () => T, x: T | Nullish): T {
+  return !isNullish(x) ? x : f();
 }
