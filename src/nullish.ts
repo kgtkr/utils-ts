@@ -24,6 +24,30 @@ export function nullishMap<T, P>(f: (x: T) => P, x: T | Nullish): P | Nullish {
   return !isNullish(x) ? f(x) : x;
 }
 
+export function nullFilter<T>(f: (x: T) => boolean, x: T | null): T | null {
+  if (x !== null) {
+    if (f(x)) {
+      return x;
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
+}
+
+export function undefinedFilter<T>(f: (x: T) => boolean, x: T | undefined): T | undefined {
+  if (x !== undefined) {
+    if (f(x)) {
+      return x;
+    } else {
+      return undefined;
+    }
+  } else {
+    return undefined;
+  }
+}
+
 export function nullUnwrap<T>(x: T | null): T {
   if (x !== null) {
     return x;
