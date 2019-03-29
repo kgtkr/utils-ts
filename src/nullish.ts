@@ -4,6 +4,10 @@ export function isNullish(x: any): x is null | undefined {
   return x === null || x === undefined;
 }
 
+export function notNullish<T>(x: T | Nullish): x is T {
+  return !isNullish(x);
+}
+
 export function nullToUndefined<T>(x: T | null): T | undefined {
   return x === null ? undefined : x;
 }
@@ -21,7 +25,7 @@ export function undefinedMap<T, P>(f: (x: T) => P) {
 }
 
 export function nullishMap<T, P>(f: (x: T) => P) {
-  return (x: T | Nullish): P | Nullish => !isNullish(x) ? f(x) : x;
+  return (x: T | Nullish): P | Nullish => notNullish(x) ? f(x) : x;
 }
 
 export function nullFilter<T>(f: (x: T) => boolean) {
@@ -69,7 +73,7 @@ export function undefinedUnwrap<T>(x: T | undefined): T {
 }
 
 export function nullishUnwrap<T>(x: T | Nullish): T {
-  if (!isNullish(x)) {
+  if (notNullish(x)) {
     return x;
   } else {
     throw new Error();
@@ -85,7 +89,7 @@ export function undefinedUnwrapOr<T>(def: T) {
 }
 
 export function nullishUnwrapOr<T>(def: T) {
-  return (x: T | Nullish): T => !isNullish(x) ? x : def;
+  return (x: T | Nullish): T => notNullish(x) ? x : def;
 }
 
 export function nullUnwrapOrElse<T>(f: () => T) {
@@ -97,5 +101,5 @@ export function undefinedUnwrapOrElse<T>(f: () => T) {
 }
 
 export function nullishUnwrapOrElse<T>(f: () => T) {
-  return (x: T | Nullish): T => !isNullish(x) ? x : f();
+  return (x: T | Nullish): T => notNullish(x) ? x : f();
 }
